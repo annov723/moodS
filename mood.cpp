@@ -2,9 +2,26 @@
 #include <string>
 #include <cstring>
 #include <vector>
+#include <stdio.h>
 
 using namespace std;
 
+typedef enum { RED = 12, YELLOW = 14, GREEN = 10 } MOOD_COLOR;
+class Moods{
+private:
+    static int Num;
+public:
+    Moods(){
+        //read moods.txt file if it exists and add all the data to the singly linked list
+    }
+    char date[11]; //dd.mm.rrrr
+    MOOD_COLOR color;
+    //vector for 5 words' note
+};
+
+int Moods::Num = 0;
+
+void printMood( Moods );
 class Node{
 public:
     Moods today;
@@ -14,9 +31,9 @@ public:
         this->today = data;
         this->next = NULL;
     };
-
-    int compareNode( Moods, Moods );
 };
+
+int compareNode( Moods, Moods );
 
 class SLList{
 private:
@@ -30,21 +47,6 @@ public:
     void deleteNode( Moods );
     void printSLList( void );
 };
-
-typedef enum { RED, YELLOW, GREEN } MOOD_COLOR;
-
-class Moods{
-private:
-    static int Num;
-public:
-    Moods(){
-        //read moods.txt file if it exists and add all the data to the singly linked list
-    }
-    char date[11]; //dd.mm.rrrr
-    MOOD_COLOR color;
-};
-
-int Moods::Num = 0;
 
 int main( void ){
 
@@ -77,7 +79,7 @@ void SLList::deleteNode( Moods thatday ){
         return;
     }
 
-    while( Node::compareNode( thatday, curr->today ) != 0 && curr != NULL ){
+    while( compareNode( thatday, curr->today ) != 0 && curr != NULL ){
         prev = curr;
         curr = curr->next;
     }
@@ -98,13 +100,24 @@ void SLList::deleteNode( Moods thatday ){
 
 void SLList::printSLList( void ){
     Node *curr = head;
-    while( curr != NULL ) printMoods
+    while( curr != NULL ) printMood( curr->today );
 }
 
-int Node::compareNode( Moods one, Moods two ){
+int compareNode( Moods one, Moods two ){
     int c;
     if( ( c = strcmp( one.date + 6, two.date + 6 ) ) != 0 ) return c;
     if( ( c = strncmp( one.date + 3, two.date + 3, 2 ) ) != 0 ) return c;
     if( ( c = strncmp( one.date, two.date, 2 ) ) != 0 ) return c;
     return 0;
+}
+
+void printMood( Moods data ){
+    cout << "***" << data.date << "***" << endl;
+    if( data.color == RED ) printf( "\033[31mbad\n" );
+    else if( data.color == YELLOW ) printf( "\033[33mbad\n" ); 
+    else printf( "\033[32mbad\n" ); 
+
+    cout << "\033[0mwhy?" << endl;
+    //vector
+
 }
