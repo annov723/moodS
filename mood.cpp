@@ -3,28 +3,59 @@
 #include <cstring>
 #include <vector>
 #include <stdio.h>
+#include <ctime>
 
 using namespace std;
 
 typedef enum { BAD = 12, NEUTRAL = 14, GOOD = 10 } MOOD_COLOR;
+
+void cleaning( void ); //function to clear input
+
 class Moods{
 private:
     static int Num;
 public:
     Moods(){
-        date[10] = '\0';
+        //constructor, unnecessary for now, update - now it's necessary xD
+        get_currdate();
     }
-    char date[11]; //dd.mm.rrrr
+    string date; //dd.mm.rrrr
     MOOD_COLOR vibe;
     //vector for 5 words' note
 
-    //function to get date 
-    //function to get vibe
+    void get_currdate( void ){
+        time_t now = time( 0 );
+        tm *ltm = localtime( &now );
+        string year = to_string( 1900 + ltm->tm_year );
+        string month = to_string( 1 + ltm->tm_mon );
+        string day = to_string( ltm->tm_mday );
+        if( day.length() == 1 ) date.append( "0" );
+        date.append( day );
+        date.append( "." );
+        if( month.length() == 1 ) date.append( "0" );
+        date.append( month );
+        date.append( "." );
+        date.append( year );
+    }
+
+    void get_vibe( void ){
+        string mood;
+        cin >> mood;
+        while( mood != "bad" && mood != "so so" && mood != "good" ){
+            cout << "Enter bad, so so or good..." << endl;
+            cleaning();
+            cin >> mood;
+            if( mood == "bad" ) vibe = BAD;
+            else if( mood == "so so" ) vibe = NEUTRAL;
+            else vibe = GOOD; 
+        }
+    }
+    
+    //function to create vector
 };
 
 int Moods::Num = 0;
 
-void printMood( Moods );
 class Node{
 public:
     Moods today;
@@ -35,8 +66,6 @@ public:
         this->next = NULL;
     };
 };
-
-int compareNode( Moods, Moods );
 
 class SLList{
 private:
@@ -52,25 +81,28 @@ public:
     void deleteSLList( void );
 };
 
-//read moods.txt file if it exists and add all the data to the singly linked list
-//void uploader( void );
+void printMood( Moods );
+int compareNode( Moods, Moods );
+//void uploader( void ); //read moods.txt file if it exists and add all the data to the singly linked list
 
 int main( void ){
 
     SLList list;
-    Moods today, yesterday;
-    today.vibe = BAD;
-    for( int i = 0; i < 10; i++ ){
-        today.date[i] = '1';
-    }
-    yesterday.vibe = GOOD;
-    for( int i = 0; i < 10; i++ ){
-        yesterday.date[i] = '1';
-    }
-    list.insertNode( yesterday );
-    list.insertNode( today );
-    list.printSLList();
+    
+    //upload data if exists
+    
+    Moods today;
+    cout << today.date << endl;
+    cout << "Hi! How is your mood today? ";
+    today.get_vibe();
+    cout << "\nType up to 5 words to describe your day:\n";
 
+    list.insertNode( today );
+    
+    list.printSLList();
+    
+
+    list.deleteSLList();
 
     return 0;
 }
@@ -126,12 +158,15 @@ void SLList::printSLList( void ){
     }
 }
 
+void cleaning( void ){
+    while( getchar() != '\n' ) continue;
+}
+
 int compareNode( Moods one, Moods two ){
     int c;
-    if( ( c = strcmp( one.date + 6, two.date + 6 ) ) != 0 ) return c;
-    if( ( c = strncmp( one.date + 3, two.date + 3, 2 ) ) != 0 ) return c;
-    if( ( c = strncmp( one.date, two.date, 2 ) ) != 0 ) return c;
-    return 0;
+    if( ( c = one.date.compare( 6, 9, two.date, 6, 9 ) ) != 0 ) return c;
+    if( ( c = one.date.compare( 3, 4, two.date, 3, 4 ) ) != 0 ) return c;
+    return one.date.compare( 0, 1, two.date, 0, 1 );
 }
 
 void printMood( Moods data ){
