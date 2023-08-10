@@ -9,16 +9,15 @@ using namespace std;
 
 typedef enum { BAD = 12, NEUTRAL = 14, GOOD = 10 } MOOD_COLOR;
 
-void cleaning( void ); //function to clear input
+void cleaning( void ); //function to clean input
 
 class Moods{
-private:
-    static int Num;
 public:
+    static int Num;
+
     Moods(){
         //constructor, unnecessary for now, update - now it's necessary xD
         get_currdate();
-        Num ++;
     }
     string date; //dd.mm.rrrr
     MOOD_COLOR vibe;
@@ -43,7 +42,7 @@ public:
         string mood;
         cin >> mood;
         while( mood != "bad" && mood != "neutral" && mood != "good" ){
-            cout << "Enter bad, neutral or good..." << endl;
+            cout << "Enter bad, neutral or good... ";
             cleaning();
             cin >> mood;
             if( mood == "bad" ) vibe = BAD;
@@ -101,7 +100,7 @@ int main( void ){
     //today.get_info();
     list.insertNode( today );
 
-    //menu(); //app menu - showing the calendar of your moods (list.printSLList() ) and statistic
+    //menu(); //app's menu - showing the calendar of your moods (list.printSLList() ) and statistic
     
     //saver( &list );
 
@@ -114,6 +113,7 @@ int main( void ){
 
 void SLList::insertNode( Moods today ){
     Node *newN = new Node( today );
+    today.Num--;
 
     if( head == NULL ){
         head = newN;
@@ -181,7 +181,6 @@ void printMood( Moods data ){
     cout << "\033[0mwhy?" << endl;
     //vector
     cout << "----------------------------------------" << endl;
-
 }
 
 void SLList::deleteSLList( void ){
