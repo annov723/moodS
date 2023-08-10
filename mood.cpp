@@ -18,6 +18,7 @@ public:
     Moods(){
         //constructor, unnecessary for now, update - now it's necessary xD
         get_currdate();
+        Num ++;
     }
     string date; //dd.mm.rrrr
     MOOD_COLOR vibe;
@@ -54,7 +55,7 @@ public:
     //function to create vector
 };
 
-int Moods::Num = 0;
+int Moods::Num = 0; //to have number of all objects, useful in creating statistic
 
 class Node{
 public:
