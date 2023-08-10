@@ -41,12 +41,12 @@ public:
     void get_vibe( void ){
         string mood;
         cin >> mood;
-        while( mood != "bad" && mood != "so so" && mood != "good" ){
-            cout << "Enter bad, so so or good..." << endl;
+        while( mood != "bad" && mood != "neutral" && mood != "good" ){
+            cout << "Enter bad, neutral or good..." << endl;
             cleaning();
             cin >> mood;
             if( mood == "bad" ) vibe = BAD;
-            else if( mood == "so so" ) vibe = NEUTRAL;
+            else if( mood == "neutral" ) vibe = NEUTRAL;
             else vibe = GOOD; 
         }
     }
@@ -83,24 +83,26 @@ public:
 
 void printMood( Moods );
 int compareNode( Moods, Moods );
-//void uploader( void ); //read moods.txt file if it exists and add all the data to the singly linked list
+//void uploader( SLList * ); //read moods.txt file if it exists and add all the data to the singly linked list
+//void saver( SLList * ); //save all data from list in .txt file
 
 int main( void ){
 
     SLList list;
     
-    //upload data if exists
+    //uploader( &list ); //upload data if exists
     
     Moods today;
     cout << today.date << endl;
     cout << "Hi! How is your mood today? ";
     today.get_vibe();
     cout << "\nType up to 5 words to describe your day:\n";
-
+    //today.get_info();
     list.insertNode( today );
+
+    //menu(); //app menu - showing the calendar of your moods (list.printSLList() ) and statistic
     
-    list.printSLList();
-    
+    //saver( &list );
 
     list.deleteSLList();
 
@@ -170,13 +172,14 @@ int compareNode( Moods one, Moods two ){
 }
 
 void printMood( Moods data ){
-    cout << "***" << data.date << "***" << endl;
+    cout << "---" + data.date + "---" << endl;
     if( data.vibe == BAD ) printf( "\033[31mbad\n\n" );
     else if( data.vibe == NEUTRAL ) printf( "\033[33mneutral\n\n" ); 
     else printf( "\033[32mgood\n\n" ); 
 
     cout << "\033[0mwhy?" << endl;
     //vector
+    cout << "----------------------------------------" << endl;
 
 }
 
