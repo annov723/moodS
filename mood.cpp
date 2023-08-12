@@ -1,9 +1,10 @@
 #include <iostream>
 #include <string>
-#include <cstring>
+#include <cstring> //to samo co string.h
 #include <vector>
 #include <stdio.h>
 #include <ctime>
+#include <fstream>
 
 using namespace std;
 
@@ -17,7 +18,13 @@ public:
 
     string date; //dd.mm.rrrr
     MOOD_COLOR vibe;
-    vector<string> info;//vector for 5 words' note
+    string words[5];//tab for 5 words' note
+
+    Moods(){
+        for( int i = 0; i < 5; i++ ){
+            words[i] = "";
+        }
+    }
 
     void get_currdate( void ){
         time_t now = time( 0 );
@@ -47,8 +54,9 @@ public:
         }
     }
     
-    void get_info( void ){ //function to create a vector
+    void get_info( void ){ //function to create a vector (just for fun), then add words to the array words
         int counter = 0;
+        vector<string> info;
         while( true ){
             string word;
             cin >> word;
@@ -56,6 +64,11 @@ public:
             info.push_back( word );
             counter++;
             if( counter == 5 ) break;
+        }
+        int j = 0;
+        for( const string& i : info ){
+            words[j] = i;
+            j++ ;
         }
     }
 
@@ -85,10 +98,9 @@ public:
 };
 
 class SLList{
-private:
+public:
     Node *head;
 
-public:
     SLList(){
         this->head = NULL;
     };
@@ -100,14 +112,13 @@ public:
 
 void printMood( Moods );
 int compareNode( Moods, Moods );
-//void uploader( SLList * ); //read moods.txt file if it exists and add all the data to the singly linked list
-//void saver( SLList * ); //save all data from list in .txt file
+void moods_import( SLList * ); //read moods.txt file if it exists and add all the data to the singly linked list
+void moods_export( SLList * ); //save all data from list in .txt file
 
 int main( void ){
 
     SLList list;
-    
-    //uploader( &list ); //upload data if exists
+    //moods_import( &list ); //upload data if exists
     
     Moods today;
     today.create_today();
@@ -116,9 +127,8 @@ int main( void ){
 
     //menu(); //app's menu - showing the calendar of your moods (list.printSLList() ) and statistic
     list.printSLList();
-    //saver( &list );
 
-    list.deleteNode( today );
+    moods_export( &list );
 
     list.deleteSLList();
 
@@ -169,7 +179,7 @@ void SLList::deleteNode( Moods thatday ){
 }
 
 void SLList::printSLList( void ){
-    cout << "***LIST OF YOUR MOODS :)***\n" << endl;
+    cout << "\n***LIST OF YOUR MOODS :)***\n" << endl;
     Node *curr = head;
     while( curr != NULL ){
         printMood( *( curr->today ) );
@@ -190,16 +200,16 @@ int compareNode( Moods one, Moods two ){
 
 void printMood( Moods data ){
     cout << "---" + data.date + "---" << endl;
-    if( data.vibe == BAD ) printf( "   \033[31mbad\n\n" );
-    else if( data.vibe == NEUTRAL ) printf( "   \033[33mneutral\n\n" ); 
+    if( data.vibe == BAD ) printf( "   \033[31mbad\n" );
+    else if( data.vibe == NEUTRAL ) printf( "   \033[33mneutral\n" ); 
     else printf( "   \033[32mgood\n" ); 
 
-    cout << "   \033[0mwhy?\n   ";
-    for ( const string& i : data.info ) {
-    cout << i << "   ";
+    cout << "\033[0m---why?\n   ";
+    for ( int i = 0; data.words[i] != ""; i++ ) {
+    cout << data.words[i] << " ";
     }
 
-    cout << "\n----------------------------------------\n" << endl;
+    cout << "\n\n";
 }
 
 void SLList::deleteSLList( void ){
@@ -212,4 +222,31 @@ void SLList::deleteSLList( void ){
     }
     delete curr;
     head = NULL;
+}
+
+void moods_export( SLList *list ){
+    ofstream file;
+    file.open( "moods_data.txt", ios::app );
+    if( !file.is_open() ){
+        cout << "An error occured." << endl;
+        return;
+    }
+
+    Node *curr = list->head;
+    while( curr->next != NULL ) curr = curr->next;
+    file << "\n" << curr->today->date << ";";
+    if( curr->today->vibe == BAD ) file << "BAD";
+    else if( curr->today->vibe == BAD ) file << "NEUTRAL";
+    else file << "GOOD";
+     file << ";";
+    for( int i = 0; curr->today->words[i] != ""; i++ ) file << curr->today->words[i] << ";";
+    file.close();
+
+    //write all elements to file, divided with semicolons
+}
+
+void moods_import( SLList *list ){
+
+    //create new elements and add them to SLList
+    return;
 }
