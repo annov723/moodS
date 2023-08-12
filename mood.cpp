@@ -4,6 +4,7 @@
 #include <vector>
 #include <stdio.h>
 #include <ctime>
+#include <fstream>
 
 using namespace std;
 
@@ -85,10 +86,9 @@ public:
 };
 
 class SLList{
-private:
+public:
     Node *head;
 
-public:
     SLList(){
         this->head = NULL;
     };
@@ -116,7 +116,8 @@ int main( void ){
 
     //menu(); //app's menu - showing the calendar of your moods (list.printSLList() ) and statistic
     list.printSLList();
-    //moods_export( &list );
+    
+    moods_export( &list );
 
     list.deleteNode( today );
 
@@ -215,7 +216,14 @@ void SLList::deleteSLList( void ){
 }
 
 void moods_export( SLList *list ){
+    ofstream file;
+    file.open( "moods_data.txt", ios::app );
+    
+    Node *curr = list->head;
+    while( curr->next != NULL ) curr = curr->next;
 
+    file.write((char*)( curr->today ),sizeof( *( curr->today )));
+    file.close();
 }
 
 /*void moods_import( SLList * ){
