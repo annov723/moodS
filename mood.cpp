@@ -224,7 +224,7 @@ void SLList::deleteSLList( void ){
     head = NULL;
 }
 
-void moods_export( SLList *list ){
+void moods_export( SLList *list ){ //write all elements to file, divided with semicolons
     ofstream file;
     file.open( "moods_data.txt", ios::app );
     if( !file.is_open() ){
@@ -241,8 +241,6 @@ void moods_export( SLList *list ){
      file << ";";
     for( int i = 0; curr->today->words[i] != ""; i++ ) file << curr->today->words[i] << ";";
     file.close();
-
-    //write all elements to file, divided with semicolons
 }
 
 void moods_import( SLList *list ){
