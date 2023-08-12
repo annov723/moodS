@@ -15,13 +15,9 @@ class Moods{
 public:
     static int Num;
 
-    Moods(){
-        //constructor, unnecessary for now, update - now it's necessary xD
-        get_currdate();
-    }
     string date; //dd.mm.rrrr
     MOOD_COLOR vibe;
-    //vector for 5 words' note
+    vector<string> info;//vector for 5 words' note
 
     void get_currdate( void ){
         time_t now = time( 0 );
@@ -51,17 +47,38 @@ public:
         }
     }
     
-    //function to create vector
+    void get_info( void ){ //function to create a vector
+        int counter = 0;
+        while( true ){
+            string word;
+            cin >> word;
+            if( word == "." ) break;
+            info.push_back( word );
+            counter++;
+            if( counter == 5 ) break;
+        }
+    }
+
+    void create_today( void ){
+        get_currdate();
+        cout << date << endl;
+        cout << "Hi! How is your mood today? ";
+        get_vibe();
+        cout << "\nType up to 5 words to describe your day (enter \".\" in new line to end):\n";
+        get_info();
+        Num++;
+    }
+
 };
 
 int Moods::Num = 0; //to have number of all objects, useful in creating statistic
 
 class Node{
 public:
-    Moods today;
+    Moods *today;
     Node *next;
 
-    Node( Moods data ){
+    Node( Moods *data ){
         this->today = data;
         this->next = NULL;
     };
@@ -75,7 +92,7 @@ public:
     SLList(){
         this->head = NULL;
     };
-    void insertNode( Moods );
+    void insertNode( Moods * );
     void deleteNode( Moods );
     void printSLList( void );
     void deleteSLList( void );
@@ -93,16 +110,15 @@ int main( void ){
     //uploader( &list ); //upload data if exists
     
     Moods today;
-    cout << today.date << endl;
-    cout << "Hi! How is your mood today? ";
-    today.get_vibe();
-    cout << "\nType up to 5 words to describe your day:\n";
-    //today.get_info();
-    list.insertNode( today );
+    today.create_today();
+    
+    list.insertNode( &today );
 
     //menu(); //app's menu - showing the calendar of your moods (list.printSLList() ) and statistic
-    
+    list.printSLList();
     //saver( &list );
+
+    list.deleteNode( today );
 
     list.deleteSLList();
 
@@ -111,9 +127,8 @@ int main( void ){
 
 
 
-void SLList::insertNode( Moods today ){
+void SLList::insertNode( Moods *today ){
     Node *newN = new Node( today );
-    today.Num--;
 
     if( head == NULL ){
         head = newN;
@@ -134,7 +149,7 @@ void SLList::deleteNode( Moods thatday ){
         return;
     }
 
-    while( compareNode( thatday, curr->today ) != 0 && curr != NULL ){
+    while( compareNode( thatday, *( curr->today ) ) != 0 && curr != NULL ){
         prev = curr;
         curr = curr->next;
     }
@@ -154,9 +169,10 @@ void SLList::deleteNode( Moods thatday ){
 }
 
 void SLList::printSLList( void ){
+    cout << "***LIST OF YOUR MOODS :)***\n" << endl;
     Node *curr = head;
     while( curr != NULL ){
-        printMood( curr->today );
+        printMood( *( curr->today ) );
         curr = curr->next;
     }
 }
@@ -174,13 +190,16 @@ int compareNode( Moods one, Moods two ){
 
 void printMood( Moods data ){
     cout << "---" + data.date + "---" << endl;
-    if( data.vibe == BAD ) printf( "\033[31mbad\n\n" );
-    else if( data.vibe == NEUTRAL ) printf( "\033[33mneutral\n\n" ); 
-    else printf( "\033[32mgood\n\n" ); 
+    if( data.vibe == BAD ) printf( "   \033[31mbad\n\n" );
+    else if( data.vibe == NEUTRAL ) printf( "   \033[33mneutral\n\n" ); 
+    else printf( "   \033[32mgood\n" ); 
 
-    cout << "\033[0mwhy?" << endl;
-    //vector
-    cout << "----------------------------------------" << endl;
+    cout << "   \033[0mwhy?\n   ";
+    for ( const string& i : data.info ) {
+    cout << i << "   ";
+    }
+
+    cout << "\n----------------------------------------\n" << endl;
 }
 
 void SLList::deleteSLList( void ){
