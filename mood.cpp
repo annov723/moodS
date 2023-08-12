@@ -100,14 +100,14 @@ public:
 
 void printMood( Moods );
 int compareNode( Moods, Moods );
-//void uploader( SLList * ); //read moods.txt file if it exists and add all the data to the singly linked list
-//void saver( SLList * ); //save all data from list in .txt file
+//void moods_import( SLList * ); //read moods.txt file if it exists and add all the data to the singly linked list
+void moods_export( SLList * ); //save all data from list in .txt file
 
 int main( void ){
 
     SLList list;
     
-    //uploader( &list ); //upload data if exists
+    //moods_import( &list ); //upload data if exists
     
     Moods today;
     today.create_today();
@@ -116,7 +116,7 @@ int main( void ){
 
     //menu(); //app's menu - showing the calendar of your moods (list.printSLList() ) and statistic
     list.printSLList();
-    //saver( &list );
+    //moods_export( &list );
 
     list.deleteNode( today );
 
@@ -169,7 +169,7 @@ void SLList::deleteNode( Moods thatday ){
 }
 
 void SLList::printSLList( void ){
-    cout << "***LIST OF YOUR MOODS :)***\n" << endl;
+    cout << "\n***LIST OF YOUR MOODS :)***\n" << endl;
     Node *curr = head;
     while( curr != NULL ){
         printMood( *( curr->today ) );
@@ -190,16 +190,16 @@ int compareNode( Moods one, Moods two ){
 
 void printMood( Moods data ){
     cout << "---" + data.date + "---" << endl;
-    if( data.vibe == BAD ) printf( "   \033[31mbad\n\n" );
-    else if( data.vibe == NEUTRAL ) printf( "   \033[33mneutral\n\n" ); 
+    if( data.vibe == BAD ) printf( "   \033[31mbad\n" );
+    else if( data.vibe == NEUTRAL ) printf( "   \033[33mneutral\n" ); 
     else printf( "   \033[32mgood\n" ); 
 
-    cout << "   \033[0mwhy?\n   ";
+    cout << "\033[0m---why?\n   ";
     for ( const string& i : data.info ) {
-    cout << i << "   ";
+    cout << i << " ";
     }
 
-    cout << "\n----------------------------------------\n" << endl;
+    cout << "\n\n";
 }
 
 void SLList::deleteSLList( void ){
@@ -213,3 +213,11 @@ void SLList::deleteSLList( void ){
     delete curr;
     head = NULL;
 }
+
+void moods_export( SLList *list ){
+
+}
+
+/*void moods_import( SLList * ){
+
+}*/
