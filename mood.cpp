@@ -228,12 +228,19 @@ void moods_export( SLList *list ){
     ofstream file;
     file.open( "moods_data.txt", ios::app );
     if( !file.is_open() ){
-        cout << "Error occured." << endl;
+        cout << "An error occured." << endl;
         return;
     }
-    
+
     Node *curr = list->head;
     while( curr->next != NULL ) curr = curr->next;
+    file << "\n" << curr->today->date << ";";
+    if( curr->today->vibe == BAD ) file << "BAD";
+    else if( curr->today->vibe == BAD ) file << "NEUTRAL";
+    else file << "GOOD";
+     file << ";";
+    for( int i = 0; curr->today->words[i] != ""; i++ ) file << curr->today->words[i] << ";";
+    file.close();
 
     //write all elements to file, divided with semicolons
 }
