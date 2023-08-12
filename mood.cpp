@@ -18,7 +18,13 @@ public:
 
     string date; //dd.mm.rrrr
     MOOD_COLOR vibe;
-    vector<string> info;//vector for 5 words' note
+    string words[5];//tab for 5 words' note
+
+    Moods(){
+        for( int i = 0; i < 5; i++ ){
+            words[i] = "";
+        }
+    }
 
     void get_currdate( void ){
         time_t now = time( 0 );
@@ -48,8 +54,9 @@ public:
         }
     }
     
-    void get_info( void ){ //function to create a vector
+    void get_info( void ){ //function to create a vector (just for fun), then add words to the array words
         int counter = 0;
+        vector<string> info;
         while( true ){
             string word;
             cin >> word;
@@ -57,6 +64,11 @@ public:
             info.push_back( word );
             counter++;
             if( counter == 5 ) break;
+        }
+        int j = 0;
+        for( const string& i : info ){
+            words[j] = i;
+            j++ ;
         }
     }
 
@@ -106,7 +118,6 @@ void moods_export( SLList * ); //save all data from list in .txt file
 int main( void ){
 
     SLList list;
-    
     //moods_import( &list ); //upload data if exists
     
     Moods today;
@@ -118,8 +129,6 @@ int main( void ){
     list.printSLList();
 
     moods_export( &list );
-
-    list.deleteNode( today );
 
     list.deleteSLList();
 
@@ -196,8 +205,8 @@ void printMood( Moods data ){
     else printf( "   \033[32mgood\n" ); 
 
     cout << "\033[0m---why?\n   ";
-    for ( const string& i : data.info ) {
-    cout << i << " ";
+    for ( int i = 0; data.words[i] != ""; i++ ) {
+    cout << data.words[i] << " ";
     }
 
     cout << "\n\n";
@@ -226,23 +235,11 @@ void moods_export( SLList *list ){
     Node *curr = list->head;
     while( curr->next != NULL ) curr = curr->next;
 
-    file.write( ( char* )( curr->today ),sizeof( *( curr->today ) ) );
-    file.close();
+    //write all elements to file, divided with semicolons
 }
 
 void moods_import( SLList *list ){
-    ifstream file;
-    file.open( "moods_data.txt", ios::in );
-    if( !file.is_open() ){
-        cout << "Error occured." << endl;
-        return;
-    }
-    file.seekg(0);
 
-
-    Node *curr = list->head;
-    while( !file.eof() ){
-        file.read( ( char* )( curr->today ),sizeof( *( curr->today ) ) );
-        curr = curr->next;
-    }
+    //create new elements and add them to SLList
+    return;
 }
