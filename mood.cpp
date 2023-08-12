@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <cstring>
+#include <cstring> //to samo co string.h
 #include <vector>
 #include <stdio.h>
 #include <ctime>
@@ -100,7 +100,7 @@ public:
 
 void printMood( Moods );
 int compareNode( Moods, Moods );
-//void moods_import( SLList * ); //read moods.txt file if it exists and add all the data to the singly linked list
+void moods_import( SLList * ); //read moods.txt file if it exists and add all the data to the singly linked list
 void moods_export( SLList * ); //save all data from list in .txt file
 
 int main( void ){
@@ -116,7 +116,7 @@ int main( void ){
 
     //menu(); //app's menu - showing the calendar of your moods (list.printSLList() ) and statistic
     list.printSLList();
-    
+
     moods_export( &list );
 
     list.deleteNode( today );
@@ -218,14 +218,31 @@ void SLList::deleteSLList( void ){
 void moods_export( SLList *list ){
     ofstream file;
     file.open( "moods_data.txt", ios::app );
+    if( !file.is_open() ){
+        cout << "Error occured." << endl;
+        return;
+    }
     
     Node *curr = list->head;
     while( curr->next != NULL ) curr = curr->next;
 
-    file.write((char*)( curr->today ),sizeof( *( curr->today )));
+    file.write( ( char* )( curr->today ),sizeof( *( curr->today ) ) );
     file.close();
 }
 
-/*void moods_import( SLList * ){
+void moods_import( SLList *list ){
+    ifstream file;
+    file.open( "moods_data.txt", ios::in );
+    if( !file.is_open() ){
+        cout << "Error occured." << endl;
+        return;
+    }
+    file.seekg(0);
 
-}*/
+
+    Node *curr = list->head;
+    while( !file.eof() ){
+        file.read( ( char* )( curr->today ),sizeof( *( curr->today ) ) );
+        curr = curr->next;
+    }
+}
