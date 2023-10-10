@@ -27,10 +27,10 @@ void Moods::get_vibe( void ){
         cout << "Enter bad, neutral or good... ";
         cleaning();
         cin >> mood;
-        if( mood == "bad" ) vibe = BAD;
-        else if( mood == "neutral" ) vibe = NEUTRAL;
-        else vibe = GOOD; 
     }
+    if( mood == "bad" ) vibe = BAD;
+    else if( mood == "neutral" ) vibe = NEUTRAL;
+    else vibe = GOOD; 
     cleaning();
 }
 
@@ -39,16 +39,21 @@ void Moods::get_info( void ){ //function to create a vector (just for fun), then
     vector<string> info;
     while( true ){
         string sentence;
-        getline( cin, sentence );
-        cout << sentence << endl;
+
+        try{
+            getline( cin, sentence );
+        }
+        catch( ... ){
+            cout << "Maybe try to shorten this one? ^^" << endl;
+            continue;
+        }
+
         if( sentence == "." ) break;
         info.push_back( sentence );
         counter++;
         if( counter == 5 ) break;
     }
-    for( const string& i : info ){
-        cout << i << endl;
-    }
+
     int j = 0;
     for( const string& i : info ){
         words[j] = i;
@@ -151,9 +156,9 @@ void printMood( Moods data ){
     else if( data.vibe == NEUTRAL ) printf( "   \033[33mneutral\n" ); 
     else printf( "   \033[32mgood\n" ); 
 
-    cout << "\033[0m---why?\n   ";
+    cout << "\033[0m---why?\n";
     for ( int i = 0; data.words[i] != ""; i++ ) {
-    cout << data.words[i] << " ";
+    cout << "  -> " + data.words[i] << endl;
     }
 
     cout << "\n\n";
