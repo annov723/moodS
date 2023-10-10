@@ -15,12 +15,9 @@ void Moods::get_currdate( void ){
     string month = to_string( 1 + ltm->tm_mon );
     string day = to_string( ltm->tm_mday );
     if( day.length() == 1 ) date.append( "0" );
-    date.append( day );
-    date.append( "." );
+    date.append( day + ".");
     if( month.length() == 1 ) date.append( "0" );
-    date.append( month );
-    date.append( "." );
-    date.append( year );
+    date.append( month + "." + year );
 }
 
 void Moods::get_vibe( void ){
@@ -34,23 +31,28 @@ void Moods::get_vibe( void ){
         else if( mood == "neutral" ) vibe = NEUTRAL;
         else vibe = GOOD; 
     }
+    cleaning();
 }
 
 void Moods::get_info( void ){ //function to create a vector (just for fun), then add words to the array words
     int counter = 0;
     vector<string> info;
     while( true ){
-        string word;
-        cin >> word;
-        if( word == "." ) break;
-        info.push_back( word );
+        string sentence;
+        getline( cin, sentence );
+        cout << sentence << endl;
+        if( sentence == "." ) break;
+        info.push_back( sentence );
         counter++;
         if( counter == 5 ) break;
+    }
+    for( const string& i : info ){
+        cout << i << endl;
     }
     int j = 0;
     for( const string& i : info ){
         words[j] = i;
-        j++ ;
+        j++;
     }
 }
 
@@ -59,7 +61,7 @@ void Moods::create_today( void ){
     cout << date << endl;
     cout << "Hi! How is your mood today? ";
     get_vibe();
-    cout << "\nType up to 5 words to describe your day (enter \".\" in new line to end):\n";
+    cout << "\nType up to 5 sentences to describe your mood (enter \".\" in new line to end):\n";
     get_info();
     Num++;
 }

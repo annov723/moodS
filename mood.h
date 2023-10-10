@@ -9,7 +9,13 @@
 #include <ctime>
 #include <fstream>
 
+
+
 using namespace std;
+
+
+
+#define MAX_SEN_LENGTH 100
 
 typedef enum { BAD = 12, NEUTRAL = 14, GOOD = 10 } MOOD_COLOR;
 
@@ -55,6 +61,7 @@ int compareNode( Moods, Moods );
 void moods_export( SLList * ); //save all data from list in the moods.txt file
 void moods_import( SLList * ); //read the moods.txt file if it exists and add all the data to the singly linked list
 
+#endif
 
 
 
