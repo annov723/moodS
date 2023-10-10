@@ -41,7 +41,7 @@ void Moods::get_info( void ){ //function to create a vector (just for fun), then
         string sentence;
 
         try{
-            getline( cin, sentence );
+            getline( cin, sentence ); //check if there are no semicolons in the user input!
         }
         catch( ... ){
             cout << "Maybe try to shorten this one? ^^" << endl;
@@ -161,7 +161,7 @@ void printMood( Moods data ){
     cout << "  -> " + data.words[i] << endl;
     }
 
-    cout << "\n\n";
+    cout << "\n";
 }
 
 int compareNode( Moods one, Moods two ){
@@ -173,25 +173,37 @@ int compareNode( Moods one, Moods two ){
 
 void moods_export( SLList *list ){ //write all elements to file, divided with semicolons
     ofstream file;
-    file.open( "moods_data.txt", ios::app );
+    file.open( "moods_data.txt", ios::app ); //to save new data at the end of the file
     if( !file.is_open() ){
         cout << "An error occured." << endl;
         return;
     }
 
     Node *curr = list->head;
-    while( curr->next != NULL ) curr = curr->next;
+    while( curr->next != NULL ) curr = curr->next; //searching for the newest log
     file << "\n" << curr->today->date << ";";
     if( curr->today->vibe == BAD ) file << "BAD";
-    else if( curr->today->vibe == BAD ) file << "NEUTRAL";
+    else if( curr->today->vibe == NEUTRAL ) file << "NEUTRAL";
     else file << "GOOD";
-     file << ";";
+    file << ";";
     for( int i = 0; curr->today->words[i] != ""; i++ ) file << curr->today->words[i] << ";";
     file.close();
 }
 
-void moods_import( SLList *list ){
+void moods_import( SLList *list ){  //create new elements from before saved data and add them to the SLList
+    ifstream file;
+    file.open( "moods_data.txt", ios::in );
+    if( !file ){ //it's just a fresh start for someone's moodS so no moods.txt file exists
+        ofstream file;
+        file.open( "moods_data.txt", ios::out );
+        file << "moodSx_2023_annov723";
+        return;
+    }
 
-    //create new elements and add them to SLList
+    Node *curr = list->head;
+    while( !file.eof() ){ //get all data for one object and create a SLList object
+        
+    }
+
     return;
 }
