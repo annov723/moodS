@@ -218,7 +218,6 @@ void moods_import( SLList *list ){  //create new elements from before saved data
         Moods *day = new Moods();
         
         getline( file, line );
-        cout << line << endl;
         day->date = line.substr( 0, 9 );
         if( line[2] != '.' || line[5] != '.' ){
             cout << "moods_data.txt is invalid! Delete this file from the application directory or upload a valid mood_data.txt file." << endl;
@@ -241,10 +240,21 @@ void moods_import( SLList *list ){  //create new elements from before saved data
                 exit( EXIT_FAILURE );
         }
 
-        cout << day->vibe << endl;
+        if( line.length() < 13 ){ //if user hasn't added any description to their log
+            list->insertNode( day );
+            continue;
+        }
+
+        int where = 13;
+        for( int i = 0; i < 5; i++ ){
+            if( line.find( ';', where ) == string::npos ) break;
+
+            int f = line.find( ';', where );
+            day->words[i] = line.substr( where, f - where );
+            where = f + 1;
+        }
 
         list->insertNode( day );  
-
     }
     
     return;
