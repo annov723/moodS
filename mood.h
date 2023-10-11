@@ -43,15 +43,40 @@ public:
     Node( Moods *data );
 };
 
+/**
+     * @brief Class of Single Linked List to store all the Moods created.
+    */
 class SLList{
 public:
     Node *head;
 
+    /**
+     * @brief Constructor for SLList, sets head as a NULL pointer.
+    */
     SLList();
 
+    /**
+     * @brief Creates new node and add it to the SSList.
+     * 
+     * @param Moods * - data to be saved in a new node
+    */
     void insertNode( Moods * );
+
+    /**
+     * @brief Deletes node from SLList.
+     * 
+     * @param Moods - element you wanna delete
+    */
     void deleteNode( Moods );
+
+    /**
+     * @brief Prints a complete list of Moods added, using printMood function.
+    */
     void printSLList( void );
+
+    /**
+     * @brief Deletes whole SLList.
+    */
     void deleteSLList( void );
 };
 
