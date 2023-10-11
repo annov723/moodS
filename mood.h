@@ -19,19 +19,40 @@ using namespace std;
 */
 typedef enum { BAD, NEUTRAL, GOOD } MOOD_COLOR;
 
+/**
+ * @brief Class with all the information about the user's mental state.
+*/
 class Moods{
 public:
     static int Num;
 
     string date; //dd.mm.rrrr
     MOOD_COLOR vibe;
-    string words[5];//tab for 5 words' note to decribe the reasons of your mental state that day
+    string words[5]; //tab for 5 words' note to decribe the reasons of user's mental state that day
 
+    /**
+     * @brief Constructor that initializes words array.
+    */
     Moods();
 
+    /**
+     * @brief Gets today's date.
+    */
     void get_currdate( void );
+
+    /**
+     * @brief Allows user to input his mental state (good, neutral, bad).
+    */
     void get_vibe( void );
+
+    /**
+     * @brief Allows user to input reasons of their mental state.
+    */
     void get_info( void );
+
+    /**
+     * @brief Connect all the methods above to fill a new Moods object.
+    */
     void create_today( void );
 };
 
@@ -88,11 +109,36 @@ public:
     void deleteSLList( void );
 };
 
+/**
+ * @brief Cleaning a console input.
+*/
 void cleaning( void ); //function to clean input
+
+/**
+ * @brief Prints information from Moods class object.
+*/
 void printMood( Moods );
+
+/**
+ * @brief Compare two Moods objects.
+ * Returns 0 if objects are the same, >0 if the first one is younger and <0 if the first one is older than the second object.
+*/
 int compareNode( Moods, Moods );
-void moods_export( SLList * ); //save all data from list in the moods.txt file
-void moods_import( SLList * ); //read the moods.txt file if it exists and add all the data to the singly linked list
+
+/**
+ * @brief Export all SLList data to a .txt file.
+ * 
+ * @param SLList * - pointer to the head element of SSlist
+*/
+void moods_export( SLList * );
+
+/**
+ * @brief Import all data from moods_data.txt fril to the SLList.
+ * If the file doesn't exists, it creates a new moods_data.txt file.
+ * 
+ * @param SLList * - pointer to the head element of SSlist
+*/
+void moods_import( SLList * );
 
 #endif
 

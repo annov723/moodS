@@ -109,18 +109,15 @@ void SLList::deleteNode( Moods thatday ){
     Node *curr = head;
     Node *prev = NULL;
 
-    if( head == NULL ){ //list is empty
-        return;
-    }
+    if( head == NULL ) return; //list is empty
 
-    while( compareNode( thatday, *( curr->today ) ) != 0 && curr != NULL ){
+    while( int k = compareNode( thatday, *( curr->today ) ) != 0 && curr != NULL ){
+        if( k < 0 ) return; //no match
         prev = curr;
         curr = curr->next;
     }
 
-    if( curr == NULL ){ //no match
-        return;
-    }
+    if( curr == NULL ) return; //no match
 
     if( prev == NULL ){
         head = head->next;
