@@ -256,6 +256,4 @@ void moods_import( SLList *list ){  //create new elements from before saved data
 
         list->insertNode( day );  
     }
-    
-    return;
 }
