@@ -205,12 +205,17 @@ void moods_import( SLList *list ){  //create new elements from before saved data
     if( !file ){ //it's just a fresh start for someone's moodS so no moods.txt file exists
         ofstream file;
         file.open( "moods_data.txt", ios::out );
-        file << "moodSx_2023_annov723";
+        file << "moodSx_2023_annov723_37482009";
         return;
     }
 
     string line;
     //check if moods_data.txt is really a good file
+    getline( file, line );
+    if( line != "moodSx_2023_annov723_37482009" ){
+        cout << "moods_data.txt is invalid! Delete this file from the application directory or upload a valid mood_data.txt file." << endl;
+        exit( EXIT_FAILURE );
+    }
 
     /*Node *curr = list->head;
     while( !file.eof() ){ //get all data for one object and create a SLList object

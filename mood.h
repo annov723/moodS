@@ -14,10 +14,10 @@
 using namespace std;
 
 
-
-#define MAX_SEN_LENGTH 100
-
-typedef enum { BAD = 12, NEUTRAL = 14, GOOD = 10 } MOOD_COLOR;
+/**
+ * @brief Enumerated type with 3 possible mood states that the user can pick from.
+*/
+typedef enum { BAD, NEUTRAL, GOOD } MOOD_COLOR;
 
 class Moods{
 public:
@@ -35,17 +35,25 @@ public:
     void create_today( void );
 };
 
+/**
+ * @brief Class to store a Moods element created.
+*/
 class Node{
 public:
     Moods *today;
     Node *next;
-
-    Node( Moods *data );
+    
+    /**
+     * @brief Constructor to add data to a Node object.
+     * 
+     * @param Moods * - data to be saved in a created object
+    */
+    Node( Moods * );
 };
 
 /**
-     * @brief Class of Single Linked List to store all the Moods created.
-    */
+ * @brief Class for Single Linked List to store all the Moods created.
+*/
 class SLList{
 public:
     Node *head;
