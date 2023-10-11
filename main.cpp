@@ -10,7 +10,6 @@ int main( void ){
     //first check if the log from today hasn't been created? (the same date as the same element from SLList)
     Moods today;
     today.create_today();
-    
     list.insertNode( &today );
 
     //menu(); //app's menu - showing the calendar of your moods ( list.printSLList() ), possible to delete a log when giving a date but it's impossible to be recovered and statistic
@@ -18,6 +17,7 @@ int main( void ){
 
     moods_export( &list );
 
+    //have to delete all allocated moods first!
     list.deleteSLList();
 
     return 0;
