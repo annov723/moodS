@@ -34,19 +34,28 @@ void Moods::get_vibe( void ){
     cleaning();
 }
 
-void Moods::get_info( void ){ //function to create a vector (just for fun), then add words to the array words
+void Moods::get_info( void ){
     int counter = 0;
     vector<string> info;
     while( true ){
         string sentence;
 
         try{
-            getline( cin, sentence ); //check if there are no semicolons in the user input!
+            getline( cin, sentence );
         }
         catch( ... ){
             cout << "Maybe try to shorten this one? ^^" << endl;
             continue;
         }
+        int k = 0;
+        for( char& c : sentence ){
+            if( c == ';' ){
+                cout << "Incorrect sign found \";\", input your sentence once again please <3" << endl;
+                k = 1;
+                break;
+            }
+        }
+        if( k == 1 ) continue;
 
         if( sentence == "." ) break;
         info.push_back( sentence );
@@ -199,6 +208,9 @@ void moods_import( SLList *list ){  //create new elements from before saved data
         file << "moodSx_2023_annov723";
         return;
     }
+
+    string line;
+    //check if moods_data.txt is really a good file
 
     /*Node *curr = list->head;
     while( !file.eof() ){ //get all data for one object and create a SLList object
