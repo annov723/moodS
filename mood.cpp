@@ -200,10 +200,10 @@ void moods_import( SLList *list ){  //create new elements from before saved data
         return;
     }
 
-    Node *curr = list->head;
+    /*Node *curr = list->head;
     while( !file.eof() ){ //get all data for one object and create a SLList object
         
-    }
+    }*/
 
     return;
 }

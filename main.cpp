@@ -5,7 +5,7 @@ int Moods::Num = 0; //to have number of all objects, useful in creating statisti
 int main( void ){
 
     SLList list;
-    //moods_import( &list ); //upload data if exists
+    moods_import( &list ); //upload data if exists
     
     //first check if the log from today hasn't been created? (the same date as the same element from SLList)
     Moods today;
