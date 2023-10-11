@@ -1,5 +1,5 @@
-#ifndef MOOD_H
-#define MOOD_H
+#ifndef __MOOD_H__
+#define __MOOD_H__
 
 #include <iostream>
 #include <string>
@@ -67,9 +67,9 @@ public:
     /**
      * @brief Constructor to add data to a Node object.
      * 
-     * @param Moods * - data to be saved in a created object
+     * @param data - data to be saved in a created object
     */
-    Node( Moods * );
+    Node( Moods *data );
 };
 
 /**
@@ -87,16 +87,16 @@ public:
     /**
      * @brief Creates new node and add it to the SSList.
      * 
-     * @param Moods * - data to be saved in a new node
+     * @param today - data to be saved in a new node
     */
-    void insertNode( Moods * );
+    void insertNode( Moods *today );
 
     /**
      * @brief Deletes node from SLList.
      * 
-     * @param Moods - element you wanna delete
+     * @param thatday - element you wanna delete
     */
-    void deleteNode( Moods );
+    void deleteNode( Moods thatday );
 
     /**
      * @brief Prints a complete list of Moods added, using printMood function.
@@ -116,29 +116,34 @@ void cleaning( void ); //function to clean input
 
 /**
  * @brief Prints information from Moods class object.
+ * 
+ * @param data - object with all information to be printed
 */
-void printMood( Moods );
+void printMood( Moods data );
 
 /**
  * @brief Compare two Moods objects.
  * Returns 0 if objects are the same, >0 if the first one is younger and <0 if the first one is older than the second object.
+ * 
+ * @param one - object to be compared with the other one
+ * @param two - the second object to be compared
 */
-int compareNode( Moods, Moods );
+int compareNode( Moods one, Moods two );
 
 /**
  * @brief Export all SLList data to a .txt file.
  * 
- * @param SLList * - pointer to the head element of SSlist
+ * @param list - pointer to the head element of SSlist
 */
-void moods_export( SLList * );
+void moods_export( SLList *list );
 
 /**
  * @brief Import all data from moods_data.txt fril to the SLList.
  * If the file doesn't exists, it creates a new moods_data.txt file.
  * 
- * @param SLList * - pointer to the head element of SSlist
+ * @param list - pointer to the head element of SSlist
 */
-void moods_import( SLList * );
+void moods_import( SLList *list );
 
 #endif
 

@@ -188,9 +188,9 @@ void moods_export( SLList *list ){ //write all elements to file, divided with se
     Node *curr = list->head;
     while( curr->next != NULL ) curr = curr->next; //searching for the newest log
     file << "\n" << curr->today->date << ";";
-    if( curr->today->vibe == BAD ) file << "BAD";
-    else if( curr->today->vibe == NEUTRAL ) file << "NEUTRAL";
-    else file << "GOOD";
+    if( curr->today->vibe == BAD ) file << BAD;
+    else if( curr->today->vibe == NEUTRAL ) file << NEUTRAL;
+    else file << GOOD;
     file << ";";
     for( int i = 0; curr->today->words[i] != ""; i++ ) file << curr->today->words[i] << ";";
     file.close();
@@ -216,7 +216,9 @@ void moods_import( SLList *list ){  //create new elements from before saved data
 
     /*Node *curr = list->head;
     while( !file.eof() ){ //get all data for one object and create a SLList object
-        
+        getline( file, line );
+        for( int i)
+
     }*/
 
     return;

@@ -13,7 +13,7 @@ int main( void ){
     
     list.insertNode( &today );
 
-    //menu(); //app's menu - showing the calendar of your moods ( list.printSLList() ) and statistic
+    //menu(); //app's menu - showing the calendar of your moods ( list.printSLList() ), possible to delete a log when giving a date but it's impossible to be recovered and statistic
     list.printSLList();
 
     moods_export( &list );
