@@ -214,12 +214,38 @@ void moods_import( SLList *list ){  //create new elements from before saved data
         exit( EXIT_FAILURE );
     }
 
-    /*Node *curr = list->head;
     while( !file.eof() ){ //get all data for one object and create a SLList object
+        Moods *day = new Moods();
+        
         getline( file, line );
-        for( int i)
+        cout << line << endl;
+        day->date = line.substr( 0, 9 );
+        if( line[2] != '.' || line[5] != '.' ){
+            cout << "moods_data.txt is invalid! Delete this file from the application directory or upload a valid mood_data.txt file." << endl;
+            exit( EXIT_FAILURE );
+        }
 
-    }*/
+        int x = stoi( line.substr( 11, 1 ) );
+        switch( x ){
+            case 0:
+                day->vibe = BAD;
+                break;
+            case 1:
+                day->vibe = NEUTRAL;
+                break;
+            case 2:
+                day->vibe = GOOD;
+                break;
+            default:
+                cout << "moods_data.txt is invalid! Delete this file from the application directory or upload a valid mood_data.txt file." << endl;
+                exit( EXIT_FAILURE );
+        }
 
+        cout << day->vibe << endl;
+
+        list->insertNode( day );  
+
+    }
+    
     return;
 }

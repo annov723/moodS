@@ -1,2 +1,4 @@
 moodSx_2023_annov723_37482009
-11.10.2023;BAD;gh;
+11.10.2023;2;bartusiek;hiszpanski byl smieszny;
+12.10.2023;1;rainy;dirty;targi kol;
+12.10.2023;2;fun;biedra run;
