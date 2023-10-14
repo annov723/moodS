@@ -121,6 +121,7 @@ void SLList::deleteNode( Moods thatday ){
 
     if( prev == NULL ){
         head = head->next;
+        delete curr->today;
         delete curr;
         return;
     }
@@ -269,5 +270,14 @@ bool check_today( SLList *list ){
     if( date1 != date2.date ) return 1; //there is no log from today
 
     return false;
+}
 
+void moods_delete( SLList *list, bool new_mood ){
+    Node *curr = list->head;
+    Moods *elem = NULL;
+    while( curr->next != NULL ){
+        delete curr->today;
+        curr = curr->next;
+    }
+    if( !new_mood ) delete curr->today;
 }

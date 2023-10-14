@@ -146,11 +146,19 @@ void moods_export( SLList *list );
 void moods_import( SLList *list );
 
 /**
- * @brief checks if the user've already made a log for "today"
+ * @brief Checks if the user've already made a log for "today".
  * 
  * @param list - pointer to the head element of SSlist, to search for the lastest one to compare it with a current date
 */
 bool check_today( SLList *list );
+
+/**
+ * @brief Deletes all allocated for Moods objects memory. 
+ * 
+ * @param list - pointer to the head element of SSlist, to go through the list and have access to every allocated object
+ * @param new - to check if the last object has been allocated
+*/
+void moods_delete( SLList *list, bool new_mood );
 
 #endif
 
