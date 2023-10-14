@@ -218,7 +218,7 @@ void moods_import( SLList *list ){  //create new elements from before saved data
         Moods *day = new Moods();
         
         getline( file, line );
-        day->date = line.substr( 0, 9 );
+        day->date = line.substr( 0, 10 );
         if( line[2] != '.' || line[5] != '.' ){
             cout << "moods_data.txt is invalid! Delete this file from the application directory or upload a valid mood_data.txt file." << endl;
             exit( EXIT_FAILURE );
@@ -255,5 +255,19 @@ void moods_import( SLList *list ){  //create new elements from before saved data
         }
 
         list->insertNode( day );  
+    }
+}
+
+bool check_today( SLList *list ){
+    Node *curr = list->head;
+    while( curr->next != NULL ) curr = curr->next;
     
+    string date1 = curr->today->date;
+    Moods date2;
+    date2.get_currdate();
+
+    if( date1 != date2.date ) return 1; //there is no log from today
+
+    return false;
+
 }

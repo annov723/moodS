@@ -147,8 +147,10 @@ void moods_import( SLList *list );
 
 /**
  * @brief checks if the user've already made a log for "today"
+ * 
+ * @param list - pointer to the head element of SSlist, to search for the lastest one to compare it with a current date
 */
-bool check_today( SSList *list );
+bool check_today( SLList *list );
 
 #endif
 
