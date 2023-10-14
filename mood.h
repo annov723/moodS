@@ -145,6 +145,11 @@ void moods_export( SLList *list );
 */
 void moods_import( SLList *list );
 
+/**
+ * @brief checks if the user've already made a log for "today"
+*/
+bool check_today( SSList *list );
+
 #endif
 
 

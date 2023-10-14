@@ -7,7 +7,8 @@ int main( void ){
     SLList list;
     moods_import( &list ); //upload data if exists
     
-    //first check if the log from today hasn't been created? (the same date as the same element from SLList)
+    check_today( &list ); //first check if the log from today hasn't been created? (the same date as an element from SLList)
+
     Moods today;
     today.create_today();
     list.insertNode( &today );
