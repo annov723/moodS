@@ -66,6 +66,7 @@ void Moods::get_info( void ){
     int j = 0;
     for( const string& i : info ){
         words[j] = i;
+         cout << "***" << words[j] << endl;
         j++;
     }
 }
@@ -148,6 +149,7 @@ void SLList::deleteNode_bydate( Moods to_del ){
     int k = 1;
     while( curr != NULL ){
         k = ( to_del.date ).compare( curr->today->date );
+        cout << "***" << k << endl;
         if( k == 0 ) break;
         if( k < 0 ){
             cout << "\n[no match]\n" << endl;
@@ -210,7 +212,7 @@ void printMood( Moods data ){
 
     cout << "\033[0m---why?\n";
     for ( int i = 0; data.words[i] != ""; i++ ) {
-    cout << "  -> " + data.words[i] << endl;
+    cout << "  -> " << data.words[i] << endl;
     }
 
     cout << "\n";
@@ -357,7 +359,7 @@ void moods_chart( SLList *list ){
         }
         curr = curr->next;
     }
-    cout << bad << neutral << good << endl;
+    
 }
 
 char get_char(){
