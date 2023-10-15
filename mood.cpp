@@ -225,7 +225,7 @@ int compareNode( Moods one, Moods two ){
 
 void moods_export( SLList *list ){ //write all elements to file, divided with semicolons
     ofstream file;
-    file.open( "moods_data.txt", ios::trunc );
+    file.open( "moods_data.txt", std::ofstream::out );
     if( !file.is_open() ){
         cout << "An error occured." << endl;
         return;
@@ -366,48 +366,34 @@ void moods_summary( SLList *list ){
     }
 
     int sum = bad + neutral + good;
-
-    cout << "\nWhat kind of a chart would you like to see?" << endl;
-    cout << "(1) moodS timeline chart\n" << "(2) moodS amount chart" << endl;
-    cout << "Choose an option: ";
-    int press, i = 1;
-    ofstream file;
-    switch( get_char() ){
-        case '1':
-            file.open( "moods_chart.dat", ios::out );
-
-            curr = list->head;
-            while( curr != NULL){
-                int k = curr->today->vibe + 1;
-                file << i << " " << k << "\n";
-                curr = curr->next;
-                i++;
-            }
-            file.close();
-
-            cout << "\nThe graphing utility Gnuplot is opening. Type \"load \"moods_chart1.gp\"\" to see the chart in a gnuplot command line.\nThen press \"q\" to return to the MoodS menu.\n(press any key to continue) " << endl;
-            cin >> press;
-            cleaning();
-            system( "gnuplot" );
-            
-            break;
-        case '2':
-            file.open( "moods_chart.dat", ios::out );
-            file << "1 bad " << bad << "\n";
-            file << "2 neutral " << neutral << "\n";
-            file << "3 good " << good << "\n";
-            file.close();
-
-            cout << "\nThe graphing utility Gnuplot is opening. Type \"load \"moods_chart2.gp\"\" to see the chart in a gnuplot command line.\nThen press \"q\" to return to the MoodS menu.\n(press any key to continue) " << endl;
-            cin >> press;
-            cleaning();
-            system( "gnuplot" );
-            
-            break;
-        default:
-            cout << "An error occured." << endl;
-            return;
-    }    
+    cout << "Sum of logs: " << sum << endl;
+    cout << "        bad: " << bad << endl;
+    cout << "    neutral: " << neutral << endl;
+    cout << "       good: " << good << "\n" << endl;
+                                            
+    if( bad > neutral && bad > good ){
+                                            cout << "           ▓\n";
+        if( neutral > good )                cout << "           ▓              ▓               \n           ▓              ▓              ▓\n";
+        else if( good > neutral )           cout << "           ▓                             ▓\n           ▓              ▓              ▓\n";
+        else                                cout << "           ▓              ▓              ▓\n";
+    }
+    else if( neutral > bad && neutral > good ){
+                                            cout << "                          ▓\n";
+        if( bad > good )                    cout << "           ▓              ▓               \n           ▓              ▓              ▓\n";
+        else if( good > bad )               cout << "                          ▓              ▓\n           ▓              ▓              ▓\n";             
+        else                                cout << "           ▓              ▓              ▓\n";
+    }
+    else if( good > neutral && good > bad ){
+                                            cout << "                                         ▓\n";
+        if( bad > neutral )                 cout << "           ▓                             ▓\n           ▓              ▓              ▓\n";
+        else if( neutral > bad )            cout << "                          ▓              ▓\n           ▓              ▓              ▓\n";             
+        else                                cout << "           ▓              ▓              ▓\n";
+    }
+    else if( bad == neutral && bad > good ) cout << "           ▓              ▓               \n           ▓              ▓              ▓\n";
+    else if( bad == good && bad > neutral ) cout << "           ▓                             ▓\n           ▓              ▓              ▓\n";
+else if( neutral == good && neutral > bad ) cout << "                          ▓              ▓\n           ▓              ▓              ▓\n";
+          else if( neutral == good == bad ) cout << "           ▓              ▓              ▓\n";
+                                            cout << "          bad          neutral          good\n" << endl;
 }
 
 char get_char(){

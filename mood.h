@@ -19,17 +19,6 @@ using namespace std;
 #define FLOWERS "   _ _  __    _ _  __     _ _  __    _ _  __    _ _  __    _ _  __\n   ( | )/_/   ( | )/_/    ( | )/_/   ( | )/_/   ( | )/_/   ( | )/_/\n__( >O< )  __( >O< )   __( >O< )  __( >O< )  __( >O< )  __( >O< )\n\\_\\(_|_)   \\_\\(_|_)    \\_\\(_|_)   \\_\\(_|_)   \\_\\(_|_)   \\_\\(_|_)\n"
 
 /**
- * @brief A date chart axises.
-*/
-#define CHART1 "        ▲\n        │\n        │\ngood    │\n        │\n        │\n        │\nneutral │\n        │\n        │\n        │\nbad     │\n        │\n        │\n        │\n        │\n        └──────────────────────────────────────────────────────────►\n                                                             date \n"
-
-/**
- * @brief A amount chart axises.
-*/
-#define CHART2 "        ▲\namount  │\n        │\n        │\n        │\n        │\n        │\n        │\n        │\n        │\n        │\n        │\n        │\n        │\n        │\n        │\n        └──────────────────────────────────────────────────────────►\n             bad             neutral            good              \n"
-
-
-/**
  * @brief Enumerated type with 3 possible mood states that the user can pick from.
 */
 typedef enum { BAD, NEUTRAL, GOOD } MOOD_COLOR;
