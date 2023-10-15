@@ -37,7 +37,7 @@ public:
 
     string date; //dd.mm.rrrr
     MOOD_COLOR vibe;
-    string words[5]; //tab for 5 words' note to decribe the reasons of user's mental state that day
+    string words[5]; //tab for 5 sentences' note to decribe the reasons of user's mental state that day
 
     /**
      * @brief Constructor that initializes words array.

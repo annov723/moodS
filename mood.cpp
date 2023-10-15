@@ -66,7 +66,6 @@ void Moods::get_info( void ){
     int j = 0;
     for( const string& i : info ){
         words[j] = i;
-         cout << "***" << words[j] << endl;
         j++;
     }
 }
@@ -316,13 +315,14 @@ void moods_import( SLList *list ){  //create new elements from before saved data
 
 bool check_today( SLList *list ){
     Node *curr = list->head;
+    if( curr == NULL ) return true;
     while( curr->next != NULL ) curr = curr->next;
     
     string date1 = curr->today->date;
     Moods date2;
     date2.get_currdate();
 
-    if( date1 != date2.date ) return 1; //there is no log from today
+    if( date1 != date2.date ) return true; //there is no log from today
 
     return false;
 }
@@ -330,11 +330,10 @@ bool check_today( SLList *list ){
 void moods_delete( SLList *list, bool new_mood ){
     Node *curr = list->head;
     Moods *elem = NULL;
-    while( curr->next != NULL ){
+    while( curr != NULL ){
         delete curr->today;
         curr = curr->next;
     }
-    if( !new_mood ) delete curr->today;
 }
 
 void moods_chart( SLList *list ){
@@ -359,12 +358,15 @@ void moods_chart( SLList *list ){
         }
         curr = curr->next;
     }
+
+    cout << CHART << endl;
     
 }
 
 char get_char(){
     string input;
     cin >> input;
+    cleaning();
     while( input.length() != 1 ){
         cout << "\n[invalid input]" << endl;
         cout << "Type one digit: ";
