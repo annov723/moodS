@@ -281,3 +281,20 @@ void moods_delete( SLList *list, bool new_mood ){
     }
     if( !new_mood ) delete curr->today;
 }
+
+void moods_chart( SLList &list ){
+    
+}
+
+char get_char(){
+    string input;
+    cin >> input;
+    while( input.length() != 1 ){
+        cout << "\n[invalid input]" << endl;
+        cout << "Type one digit: ";
+        cin >> input;
+    }
+    
+    return input[0];
+    
+}

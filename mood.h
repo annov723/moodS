@@ -13,11 +13,15 @@
 
 using namespace std;
 
+#define FLOWERS "\n   _ _  __    _ _  __     _ _  __    _ _  __    _ _  __    _ _  __\n   ( | )/_/   ( | )/_/    ( | )/_/   ( | )/_/   ( | )/_/   ( | )/_/\n__( >O< )  __( >O< )   __( >O< )  __( >O< )  __( >O< )  __( >O< )\n\\_\\(_|_)   \\_\\(_|_)    \\_\\(_|_)   \\_\\(_|_)   \\_\\(_|_)   \\_\\(_|_)\n"
+
 
 /**
  * @brief Enumerated type with 3 possible mood states that the user can pick from.
 */
 typedef enum { BAD, NEUTRAL, GOOD } MOOD_COLOR;
+
+
 
 /**
  * @brief Class with all the information about the user's mental state.
@@ -109,6 +113,8 @@ public:
     void deleteSLList( void );
 };
 
+
+
 /**
  * @brief Cleaning a console input.
 */
@@ -133,7 +139,7 @@ int compareNode( Moods one, Moods two );
 /**
  * @brief Export all SLList data to a .txt file.
  * 
- * @param list - pointer to the head element of SSlist
+ * @param list - pointer to the SSlist
 */
 void moods_export( SLList *list );
 
@@ -141,24 +147,36 @@ void moods_export( SLList *list );
  * @brief Import all data from moods_data.txt fril to the SLList.
  * If the file doesn't exists, it creates a new moods_data.txt file.
  * 
- * @param list - pointer to the head element of SSlist
+ * @param list - pointer to the SSlist
 */
 void moods_import( SLList *list );
 
 /**
  * @brief Checks if the user've already made a log for "today".
  * 
- * @param list - pointer to the head element of SSlist, to search for the lastest one to compare it with a current date
+ * @param list - pointer to the SSlist, to search for the lastest one to compare it with a current date
 */
 bool check_today( SLList *list );
 
 /**
  * @brief Deletes all allocated for Moods objects memory. 
  * 
- * @param list - pointer to the head element of SSlist, to go through the list and have access to every allocated object
- * @param new - to check if the last object has been allocated
+ * @param list - pointer to the SSlist, to go through the list and have access to every allocated object
+ * @param new_mood - to check if the last object has been allocated
 */
 void moods_delete( SLList *list, bool new_mood );
+
+/**
+ * @brief Function used to compare number of every mood state and show it as a bar graph.
+ * 
+ * @param list - pointer to the SSlist to have access to all Moods objects created
+*/
+void moods_chart( SLList &list );
+
+/**
+ * @brief Gets char from the standatd input.
+*/
+char get_char();
 
 #endif
 

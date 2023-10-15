@@ -14,13 +14,31 @@ int main( void ){
         list.insertNode( &today );
     }
 
-    //menu(); //app's menu - showing the calendar of your moods ( list.printSLList() ), possible to delete a log when giving a date but it's impossible to be recovered and statistic
-    //list.printSLList();
+    //app's menu - showing the calendar of your moods ( list.printSLList() ), possible to delete a log when giving a date but it's impossible to be recovered and statistic
+    while( true ){
+        cout << FLOWERS << "\n                            ***MENU***\n" << endl;
+        cout << "(1)moodS list\n" << "(2)moodS chart\n" << "(3)quit\n" << endl;
+        cout << "Choose an option: ";
+        switch( get_char() ){
+            case '1':
+                list.printSLList();
+                break;
+            case '2':
+                //moods_chart( &list );
+                break;
+            case '3':
+                cout << "Have a nice day!" << endl;
+                if( new_mood ) moods_export( &list );
 
-    if( new_mood ) moods_export( &list );
+                moods_delete( &list, new_mood ); //have to delete all allocated moods first!
+                list.deleteSLList();
+                return 0;
+            default:
+                cout << "[invalid option]" << endl;
 
-    moods_delete( &list, new_mood ); //have to delete all allocated moods first!
-    list.deleteSLList();
+        }
 
-    return 0;
+    }
+        
+    return 1;
 }
