@@ -191,7 +191,7 @@ void moods_delete( SLList *list, bool new_mood );
  * 
  * @param list - pointer to the SSlist to have access to all Moods objects created
 */
-void moods_chart( SLList *list );
+void moods_summary( SLList *list );
 
 /**
  * @brief Gets char from the standatd input.

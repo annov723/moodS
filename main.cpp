@@ -19,14 +19,14 @@ int main( void ){
     //app's menu - to show the calendar of your moods ( list.printSLList() ), delete a chosen log, show statistic
     while( true ){
         cout << FLOWERS << "\n                         ***moodS menu***\n" << endl;
-        cout << "(1) moodS list\n" << "(2) moodS chart\n" << "(3) delete a moodS\n" << "(4) quit\n" << endl;
+        cout << "(1) MoodS list\n" << "(2) moodS summary\n" << "(3) delete a moodS\n" << "(4) quit\n" << endl;
         cout << "Choose an option: ";
         switch( get_char() ){
             case '1':
                 list.printSLList();
                 break;
             case '2':
-                moods_chart( &list );
+                moods_summary( &list );
                 break;
             case '3':
                 list.printSLList();

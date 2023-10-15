@@ -176,7 +176,7 @@ void SLList::deleteNode_bydate( Moods to_del ){
 }
 
 void SLList::printSLList( void ){
-    cout << "\n***LIST OF YOUR MOODS :)***\n" << endl;
+    cout << "\n***LIST OF YOUR MoodS :)***\n" << endl;
     Node *curr = head;
     while( curr != NULL ){
         printMood( *( curr->today ) );
@@ -233,7 +233,11 @@ void moods_export( SLList *list ){ //write all elements to file, divided with se
 
     file << "moodSx_2023_annov723_37482009";
     
-    if( list->head == NULL ) return;
+    if( list->head == NULL ){
+        file.close();
+        return;
+    }
+
     Node *curr = list->head;
     while( curr != NULL ){
         file << "\n" << curr->today->date << ";";
@@ -258,6 +262,7 @@ void moods_import( SLList *list ){  //create new elements from before saved data
         ofstream file;
         file.open( "moods_data.txt", ios::out );
         file << "moodSx_2023_annov723_37482009";
+        file.close();
         return;
     }
 
@@ -311,6 +316,7 @@ void moods_import( SLList *list ){  //create new elements from before saved data
 
         list->insertNode( day );  
     }
+    file.close();
 }
 
 bool check_today( SLList *list ){
@@ -337,7 +343,7 @@ void moods_delete( SLList *list, bool new_mood ){
     }
 }
 
-void moods_chart( SLList *list ){
+void moods_summary( SLList *list ){
     int good = 0, neutral = 0, bad = 0;
     Node *curr = list->head;
     if( list->head == NULL ) return;
@@ -362,18 +368,45 @@ void moods_chart( SLList *list ){
     int sum = bad + neutral + good;
 
     cout << "\nWhat kind of a chart would you like to see?" << endl;
-    cout << "(1) time-mood chart\n" << "(2) mood-amount chart" << endl;
+    cout << "(1) moodS timeline chart\n" << "(2) moodS amount chart" << endl;
     cout << "Choose an option: ";
+    int press, i = 1;
+    ofstream file;
     switch( get_char() ){
         case '1':
-            cout << CHART1 << endl;
+            file.open( "moods_chart.dat", ios::out );
+
             curr = list->head;
+            while( curr != NULL){
+                int k = curr->today->vibe + 1;
+                file << i << " " << k << "\n";
+                curr = curr->next;
+                i++;
+            }
+            file.close();
+
+            cout << "\nThe graphing utility Gnuplot is opening. Type \"load \"moods_chart1.gp\"\" to see the chart in a gnuplot command line.\nThen press \"q\" to return to the MoodS menu.\n(press any key to continue) " << endl;
+            cin >> press;
+            cleaning();
+            system( "gnuplot" );
+            
             break;
         case '2':
-            cout << CHART2 << endl;
-            double b1 = bad / sum, n1 = neutral / sum, g1 = good / sum;
+            file.open( "moods_chart.dat", ios::out );
+            file << "1 bad " << bad << "\n";
+            file << "2 neutral " << neutral << "\n";
+            file << "3 good " << good << "\n";
+            file.close();
 
+            cout << "\nThe graphing utility Gnuplot is opening. Type \"load \"moods_chart2.gp\"\" to see the chart in a gnuplot command line.\nThen press \"q\" to return to the MoodS menu.\n(press any key to continue) " << endl;
+            cin >> press;
+            cleaning();
+            system( "gnuplot" );
+            
             break;
+        default:
+            cout << "An error occured." << endl;
+            return;
     }    
 }
 
