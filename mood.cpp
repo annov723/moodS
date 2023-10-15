@@ -225,20 +225,28 @@ int compareNode( Moods one, Moods two ){
 
 void moods_export( SLList *list ){ //write all elements to file, divided with semicolons
     ofstream file;
-    file.open( "moods_data.txt", ios::trunc );
+    file.open( "moods_data.txt", ios::out );
     if( !file.is_open() ){
         cout << "An error occured." << endl;
         return;
     }
 
+    file << "moodSx_2023_annov723_37482009";
+    
     Node *curr = list->head;
-    while( curr->next != NULL ) curr = curr->next; //searching for the newest log
-    file << "\n" << curr->today->date << ";";
-    if( curr->today->vibe == BAD ) file << BAD;
-    else if( curr->today->vibe == NEUTRAL ) file << NEUTRAL;
-    else file << GOOD;
-    file << ";";
-    for( int i = 0; curr->today->words[i] != ""; i++ ) file << curr->today->words[i] << ";";
+    while( curr != NULL ){
+        file << "\n" << curr->today->date << ";";
+
+        if( curr->today->vibe == BAD ) file << BAD;
+        else if( curr->today->vibe == NEUTRAL ) file << NEUTRAL;
+        else file << GOOD;
+
+        file << ";";
+        for( int i = 0; curr->today->words[i] != ""; i++ ) file << curr->today->words[i] << ";";
+
+        curr = curr->next;
+    }
+
     file.close();
 }
 
