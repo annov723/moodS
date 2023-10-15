@@ -114,7 +114,7 @@ void SLList::deleteNode( Moods thatday ){
     int k = 1;
     while( ( k = compareNode( thatday, *( curr->today ) ) ) != 0 && curr != NULL ){
         if( k < 0 ){
-            cout << "\n[no match]" << endl;
+            cout << "\n[no match]\n" << endl;
             return; //no match
         }
         prev = curr;
@@ -122,7 +122,7 @@ void SLList::deleteNode( Moods thatday ){
     }
 
     if( curr == NULL ){
-        cout << "\n[no match]" << endl;
+        cout << "\n[no match]\n" << endl;
         return; //no match
     }
 
@@ -130,11 +130,13 @@ void SLList::deleteNode( Moods thatday ){
         head = head->next;
         delete curr->today;
         delete curr;
+        cout << "\n[deleted successfully]\n" << endl;
         return;
     }
 
     prev->next = curr->next;
     delete curr;
+    cout << "\n[deleted successfully]\n" << endl;
 }
 
 void SLList::deleteNode_bydate( Moods to_del ){
@@ -148,7 +150,7 @@ void SLList::deleteNode_bydate( Moods to_del ){
         k = ( to_del.date ).compare( curr->today->date );
         if( k == 0 ) break;
         if( k < 0 ){
-            cout << "\n[no match]" << endl;
+            cout << "\n[no match]\n" << endl;
             return; //no match
         }
         prev = curr;
@@ -156,7 +158,7 @@ void SLList::deleteNode_bydate( Moods to_del ){
     }
 
     if( curr == NULL ){
-        cout << "\n[no match]" << endl;
+        cout << "\n[no match]\n" << endl;
         return; //no match
     }
 
@@ -164,13 +166,13 @@ void SLList::deleteNode_bydate( Moods to_del ){
         head = head->next;
         delete curr->today;
         delete curr;
-        cout << "[" << to_del.date << " deleted succesfully]\n" << endl;
+        cout << "\n[" << to_del.date << " deleted successfully]\n" << endl;
         return;
     }
 
     prev->next = curr->next;
     delete curr;
-    cout << "[" << to_del.date << " deleted succesfully]\n" << endl;
+    cout << "\n[" << to_del.date << " deleted successfully]\n" << endl;
 }
 
 void SLList::printSLList( void ){
@@ -223,7 +225,7 @@ int compareNode( Moods one, Moods two ){
 
 void moods_export( SLList *list ){ //write all elements to file, divided with semicolons
     ofstream file;
-    file.open( "moods_data.txt", ios::app ); //to save new data at the end of the file
+    file.open( "moods_data.txt", ios::trunc );
     if( !file.is_open() ){
         cout << "An error occured." << endl;
         return;
@@ -325,8 +327,29 @@ void moods_delete( SLList *list, bool new_mood ){
     if( !new_mood ) delete curr->today;
 }
 
-void moods_chart( SLList &list ){
-    
+void moods_chart( SLList *list ){
+    int good = 0, neutral = 0, bad = 0;
+
+    Node *curr = list->head;
+
+    while( curr != NULL ){
+        switch( curr->today->vibe ){
+            case 0:
+                bad++;
+                break;
+            case 1:
+                neutral++;
+                break;
+            case 2:
+                good++;
+                break;
+            default:
+                cout << "An error occured." << endl;
+                return;
+        }
+        curr = curr->next;
+    }
+    cout << bad << neutral << good << endl;
 }
 
 char get_char(){

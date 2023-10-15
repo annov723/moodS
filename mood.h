@@ -112,7 +112,7 @@ public:
      * @param to_del - an object chosen to be removed
     */
     void deleteNode_bydate( Moods to_del );
-    
+
     /**
      * @brief Prints a complete list of Moods added, using printMood function.
     */
@@ -182,7 +182,7 @@ void moods_delete( SLList *list, bool new_mood );
  * 
  * @param list - pointer to the SSlist to have access to all Moods objects created
 */
-void moods_chart( SLList &list );
+void moods_chart( SLList *list );
 
 /**
  * @brief Gets char from the standatd input.

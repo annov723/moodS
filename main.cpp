@@ -26,7 +26,7 @@ int main( void ){
                 list.printSLList();
                 break;
             case '2':
-                //moods_chart( &list );
+                moods_chart( &list );
                 break;
             case '3':
                 list.printSLList();
@@ -37,7 +37,7 @@ int main( void ){
                 break;
             case '4':
                 cout << "\nHave a nice day!" << endl;
-                if( new_mood ) moods_export( &list );
+                moods_export( &list );
 
                 moods_delete( &list, new_mood ); //have to delete all allocated moods first!
                 list.deleteSLList();
