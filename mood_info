@@ -1,5 +1,4 @@
 -> app allows user to input their mood (bad, neutral, good) every day, add details why they feel that way (up to five words)
 -> all data is stored in .txt file which is loaded everytime the app is running and created if its the first time
 -> there is a singly linked list to go through all the saved days
--> the user can add his mood state once a day, view all the days saved, view the "mood chart" - how many moods of each kind there are saved for now
--> the user can delete any log they want but it's impossible t recover the lost data
+-> the user can add his mood state once a day, view all the dayso recover the lost data

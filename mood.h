@@ -13,7 +13,11 @@
 
 using namespace std;
 
-#define FLOWERS "\n   _ _  __    _ _  __     _ _  __    _ _  __    _ _  __    _ _  __\n   ( | )/_/   ( | )/_/    ( | )/_/   ( | )/_/   ( | )/_/   ( | )/_/\n__( >O< )  __( >O< )   __( >O< )  __( >O< )  __( >O< )  __( >O< )\n\\_\\(_|_)   \\_\\(_|_)    \\_\\(_|_)   \\_\\(_|_)   \\_\\(_|_)   \\_\\(_|_)\n"
+/**
+ * @brief A header of the app's menu.
+*/
+#define FLOWERS "   _ _  __    _ _  __     _ _  __    _ _  __    _ _  __    _ _  __\n   ( | )/_/   ( | )/_/    ( | )/_/   ( | )/_/   ( | )/_/   ( | )/_/\n__( >O< )  __( >O< )   __( >O< )  __( >O< )  __( >O< )  __( >O< )\n\\_\\(_|_)   \\_\\(_|_)    \\_\\(_|_)   \\_\\(_|_)   \\_\\(_|_)   \\_\\(_|_)\n"
+
 
 
 /**
@@ -103,6 +107,13 @@ public:
     void deleteNode( Moods thatday );
 
     /**
+     * @brief Deletes an element of SLList object, based on a comparision of dates.
+     * 
+     * @param to_del - an object chosen to be removed
+    */
+    void deleteNode_bydate( Moods to_del );
+    
+    /**
      * @brief Prints a complete list of Moods added, using printMood function.
     */
     void printSLList( void );
@@ -177,6 +188,11 @@ void moods_chart( SLList &list );
  * @brief Gets char from the standatd input.
 */
 char get_char();
+
+/**
+ * @brief Gets date from the standatd input.
+*/
+string get_date();
 
 #endif
 

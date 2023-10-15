@@ -111,13 +111,20 @@ void SLList::deleteNode( Moods thatday ){
 
     if( head == NULL ) return; //list is empty
 
-    while( int k = compareNode( thatday, *( curr->today ) ) != 0 && curr != NULL ){
-        if( k < 0 ) return; //no match
+    int k = 1;
+    while( ( k = compareNode( thatday, *( curr->today ) ) ) != 0 && curr != NULL ){
+        if( k < 0 ){
+            cout << "\n[no match]" << endl;
+            return; //no match
+        }
         prev = curr;
         curr = curr->next;
     }
 
-    if( curr == NULL ) return; //no match
+    if( curr == NULL ){
+        cout << "\n[no match]" << endl;
+        return; //no match
+    }
 
     if( prev == NULL ){
         head = head->next;
@@ -128,6 +135,42 @@ void SLList::deleteNode( Moods thatday ){
 
     prev->next = curr->next;
     delete curr;
+}
+
+void SLList::deleteNode_bydate( Moods to_del ){
+    Node *curr = head;
+    Node *prev = NULL;
+
+    if( head == NULL ) return; //list is empty
+
+    int k = 1;
+    while( curr != NULL ){
+        k = ( to_del.date ).compare( curr->today->date );
+        if( k == 0 ) break;
+        if( k < 0 ){
+            cout << "\n[no match]" << endl;
+            return; //no match
+        }
+        prev = curr;
+        curr = curr->next;
+    }
+
+    if( curr == NULL ){
+        cout << "\n[no match]" << endl;
+        return; //no match
+    }
+
+    if( prev == NULL ){
+        head = head->next;
+        delete curr->today;
+        delete curr;
+        cout << "[" << to_del.date << " deleted succesfully]\n" << endl;
+        return;
+    }
+
+    prev->next = curr->next;
+    delete curr;
+    cout << "[" << to_del.date << " deleted succesfully]\n" << endl;
 }
 
 void SLList::printSLList( void ){
@@ -294,7 +337,32 @@ char get_char(){
         cout << "Type one digit: ";
         cin >> input;
     }
-    
-    return input[0];
-    
+
+    return input[0]; 
+}
+
+string get_date(){
+    string input;
+    bool check;
+    while( true ){
+        cin >> input;
+        cleaning();
+        check = true;
+        if( input.length() != 10 || input[2] != '.' || input[5] != '.' ) check = false;
+        if( check == true ){
+            for( int i = 0; i < input.length(); i++ ){
+                if( i == 2 || i == 5 ) continue;
+                if( !isdigit( input[i] ) ){
+                    check = false;
+                    break;
+                }
+            }
+        }
+        if( check == true ) break;
+
+        cout << "\n[invalid input]" << endl;
+        cout << "Type a date [dd.mm.yyyy]: ";
+    }
+
+    return input; 
 }

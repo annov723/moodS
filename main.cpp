@@ -14,10 +14,12 @@ int main( void ){
         list.insertNode( &today );
     }
 
+    Moods to_del;
+
     //app's menu - showing the calendar of your moods ( list.printSLList() ), possible to delete a log when giving a date but it's impossible to be recovered and statistic
     while( true ){
-        cout << FLOWERS << "\n                            ***MENU***\n" << endl;
-        cout << "(1)moodS list\n" << "(2)moodS chart\n" << "(3)quit\n" << endl;
+        cout << FLOWERS << "\n                         ***moodS menu***\n" << endl;
+        cout << "(1) moodS list\n" << "(2) moodS chart\n" << "(3) delete a log\n" << "(4) quit\n" << endl;
         cout << "Choose an option: ";
         switch( get_char() ){
             case '1':
@@ -27,14 +29,21 @@ int main( void ){
                 //moods_chart( &list );
                 break;
             case '3':
-                cout << "Have a nice day!" << endl;
+                list.printSLList();
+                cout << "Type date of a log you wanna remove, remember that you cannot recover the removed data: ";
+                
+                to_del.date = get_date();
+                list.deleteNode_bydate( to_del );
+                break;
+            case '4':
+                cout << "\nHave a nice day!" << endl;
                 if( new_mood ) moods_export( &list );
 
                 moods_delete( &list, new_mood ); //have to delete all allocated moods first!
                 list.deleteSLList();
                 return 0;
             default:
-                cout << "[invalid option]" << endl;
+                cout << "\n[invalid option]";
 
         }
 
