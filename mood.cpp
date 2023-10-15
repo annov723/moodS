@@ -148,7 +148,6 @@ void SLList::deleteNode_bydate( Moods to_del ){
     int k = 1;
     while( curr != NULL ){
         k = ( to_del.date ).compare( curr->today->date );
-        cout << "***" << k << endl;
         if( k == 0 ) break;
         if( k < 0 ){
             cout << "\n[no match]\n" << endl;
@@ -210,8 +209,8 @@ void printMood( Moods data ){
     else printf( "   \033[32mgood\n" ); 
 
     cout << "\033[0m---why?\n";
-    for ( int i = 0; data.words[i] != ""; i++ ) {
-    cout << "  -> " << data.words[i] << endl;
+    for ( int i = 0; i < 5 && data.words[i] != ""; i++ ) {
+        cout << "  -> " << data.words[i] << endl;
     }
 
     cout << "\n";
@@ -226,7 +225,7 @@ int compareNode( Moods one, Moods two ){
 
 void moods_export( SLList *list ){ //write all elements to file, divided with semicolons
     ofstream file;
-    file.open( "moods_data.txt", ios::out );
+    file.open( "moods_data.txt", ios::trunc );
     if( !file.is_open() ){
         cout << "An error occured." << endl;
         return;
@@ -234,6 +233,7 @@ void moods_export( SLList *list ){ //write all elements to file, divided with se
 
     file << "moodSx_2023_annov723_37482009";
     
+    if( list->head == NULL ) return;
     Node *curr = list->head;
     while( curr != NULL ){
         file << "\n" << curr->today->date << ";";
@@ -328,6 +328,7 @@ bool check_today( SLList *list ){
 }
 
 void moods_delete( SLList *list, bool new_mood ){
+    if( list->head == NULL ) return;
     Node *curr = list->head;
     Moods *elem = NULL;
     while( curr != NULL ){
@@ -338,9 +339,8 @@ void moods_delete( SLList *list, bool new_mood ){
 
 void moods_chart( SLList *list ){
     int good = 0, neutral = 0, bad = 0;
-
     Node *curr = list->head;
-
+    if( list->head == NULL ) return;
     while( curr != NULL ){
         switch( curr->today->vibe ){
             case 0:
@@ -359,8 +359,22 @@ void moods_chart( SLList *list ){
         curr = curr->next;
     }
 
-    cout << CHART << endl;
-    
+    int sum = bad + neutral + good;
+
+    cout << "\nWhat kind of a chart would you like to see?" << endl;
+    cout << "(1) time-mood chart\n" << "(2) mood-amount chart" << endl;
+    cout << "Choose an option: ";
+    switch( get_char() ){
+        case '1':
+            cout << CHART1 << endl;
+            curr = list->head;
+            break;
+        case '2':
+            cout << CHART2 << endl;
+            double b1 = bad / sum, n1 = neutral / sum, g1 = good / sum;
+
+            break;
+    }    
 }
 
 char get_char(){
