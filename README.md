@@ -9,6 +9,6 @@ my first fully self crated C++ project, some kind of diary to input  and monitor
 
 -> the user can add his mood state once a day, view all the days, see the comparision of all made logs and delete unwanted logs
 
--> ctime library used to get the current date
+-> C Time Library used to get the current date
 
 -> vector variable to collect mood description
